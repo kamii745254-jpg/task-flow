@@ -1,32 +1,71 @@
-import { NativeTabs } from 'expo-router/native-tabs';
-import { useColorScheme } from 'react-native';
 
-import { Colors } from '@/constants/theme';
+import { Tabs } from 'expo-router';
+import { Text } from 'react-native';
 
 export default function AppTabs() {
-  const scheme = useColorScheme();
-  const colors = Colors[scheme === 'dark' ? 'dark' : 'light'];
-
   return (
-    <NativeTabs
-      backgroundColor={colors.background}
-      indicatorColor={colors.backgroundElement}
-      labelStyle={{ selected: { color: colors.text } }}>
-      <NativeTabs.Trigger name="index">
-        <NativeTabs.Trigger.Label>Home</NativeTabs.Trigger.Label>
-        <NativeTabs.Trigger.Icon
-          src={require('@/assets/images/tabIcons/home.png')}
-          renderingMode="template"
-        />
-      </NativeTabs.Trigger>
+    <Tabs
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: '#704BE0',
+        tabBarInactiveTintColor: '#A39BB5',
+        tabBarStyle: {
+          height: 68,
+          paddingTop: 8,
+          paddingBottom: 8,
+          backgroundColor: '#FFFFFF',
+          borderTopColor: '#EEEAF7',
+          elevation: 8,
+        },
+        tabBarLabelStyle: {
+          fontSize: 11,
+          fontWeight: '600',
+        },
+      }}
+    >
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: 'Tasks',
+          tabBarIcon: ({ color }) => (
+            <TextIcon symbol="☷" color={color} />
+          ),
+        }}
+      />
 
-      <NativeTabs.Trigger name="explore">
-        <NativeTabs.Trigger.Label>Explore</NativeTabs.Trigger.Label>
-        <NativeTabs.Trigger.Icon
-          src={require('@/assets/images/tabIcons/explore.png')}
-          renderingMode="template"
-        />
-      </NativeTabs.Trigger>
-    </NativeTabs>
+      <Tabs.Screen
+        name="explore"
+        options={{
+          title: 'Add Task',
+          tabBarIcon: ({ color }) => (
+            <TextIcon symbol="＋" color={color} />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: 'Profile',
+          tabBarIcon: ({ color }) => (
+            <TextIcon symbol="○" color={color} />
+          ),
+        }}
+      />
+    </Tabs>
+  );
+}
+
+function TextIcon({
+  symbol,
+  color,
+}: {
+  symbol: string;
+  color: string;
+}) {
+  return (
+    <Text style={{ color, fontSize: 23, fontWeight: '600' }}>
+      {symbol}
+    </Text>
   );
 }
